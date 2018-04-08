@@ -11,7 +11,7 @@ from selenium.common.exceptions import NoSuchElementException
  
 EMAIL = "xianhaic@gmail.com"
 PASS = "153968Pa"
-RESIZE = "0.4"
+RESIZE = "0.75"
  
 def click_by(by, name, locate_delay=3, click_delay=1):
     print("Attempting to retrive:", name)
@@ -33,15 +33,19 @@ def click_by(by, name, locate_delay=3, click_delay=1):
             print("Retrying:", name, "NoSuchWindowException")
             continue
  
-    #driver.execute_script("document.body.style.zoom = '" + RESIZE + "'");
+    driver.execute_script("document.body.style.zoom = '" + RESIZE + "'");
     time.sleep(click_delay)
-    #driver.execute_script("arguments[0].scrollIntoView(true);", element)
+    driver.execute_script("arguments[0].scrollIntoView(true);", element)
     time.sleep(click_delay) 
+    #driver.find_element(by, name)
+    #driver.find_element(by, name).click()
     print(element.location)
-    print(element.width)
-    print(element.height)
-    #click_retry(element)
-    webdriver.ActionChains(driver).move_to_element(element).click(element).perform()
+    #print(element.size["width"])
+    #print(element.size["height"])
+    click_retry(element)
+    #webdriver.ActionChains(driver).move_to_element(element).click(element).perform()
+    #webdriver.ActionChains(driver).move_to_element_with_offset(element,
+           # element.size["width"] / 2, element.size["height"] / 2).click(element).perform()
  
 def get_element_by(by, name, locate_delay=3):
     print("Attempting to retrive:", name)
@@ -74,15 +78,12 @@ def click_retry(element, retry_delay=3):
             time.sleep(retry_delay)
             continue
 
- 
 driver = webdriver.Chrome()
 driver.get("http://game.granbluefantasy.jp")
 time.sleep(3)
 click_by(By.ID, "login-auth")
-'''
-WebDriverWait(driver, 3).until(EC.invisibility_of_element_located((By.CSS_SELECTOR, 'div[class="cnt-presetting"]')))
-click_by(By.XPATH, '//*[@id="mobage-login"]/img')
 
+click_by(By.XPATH, '//*[@id="mobage-login"]/img')
 current_handle = driver.window_handles[0]
 driver.switch_to_window(driver.window_handles[-1])
  
@@ -97,12 +98,21 @@ time.sleep(10)
 
 #trial battles
 click_by(By.CSS_SELECTOR, 'div[class="btn-campaign-toggle"]')
+time.sleep(3)
+'''
+banner1 = driver.find_element(By.XPATH, '//*[@id="wrapper"]/div[3]/div[2]/div[5]/div[2]/div[3]/img')
+banner2 = driver.find_element(By.XPATH, '//*[@id="wrapper"]/div[3]/div[2]/div[5]/div[2]/div[2]/img')
+driver.execute_script("arguments[0].scrollIntoView(true);", banner1)
+time.sleep(1) 
+
+print banner1.location
+print banner2.location
+'''
 click_by(By.XPATH, '//*[@id="wrapper"]/div[3]/div[2]/div[5]/div[2]/div[3]/img')
 click_by(By.CSS_SELECTOR, 'div[data-group-title="Test Machina Alpha"]')
 click_by(By.CSS_SELECTOR, 'div[data-quest-id="990011"]')
-'''
-'''
 
+'''
 while True:
     current_css = get_element_by(By.ID, "asset-css")
     if current_css.get_attribute("data-css") == "/quest/supporter.css":
@@ -124,6 +134,7 @@ while True:
         break
     time.sleep(3)
 click_by(By.XPATH, '//*[@id="pop"]/div/div[3]/div')
+time.sleep(5)
 click_by(By.CSS_SELECTOR, 'div[class="lis-character2 btn-command-character"]')
 click_by(By.CSS_SELECTOR, 'div[class="ico-pre"]')
 #raid stuff
