@@ -28,7 +28,7 @@ def click_by(driver, ref, by, name, locate_delay=3, click_delay=1,
             print("Found:", name)
             break
         except NoSuchElementException:
-            print("Retrying:", name, "NoSuchElementException")
+            print("Retrying:", name, "NoSuchElementException", driver.current_url)
             time.sleep(locate_delay)
             continue
         except TimeoutException:
@@ -68,11 +68,14 @@ def get_element_by(driver, ref, by, name, locate_delay=3):
 def click_retry(driver, element, retry_delay=3, click_delay=1, force=False):
     while True:
         try:
-            webdriver.ActionChains(driver).move_to_element(element).perform()
-            webdriver.ActionChains(driver).send_keys(Keys.DOWN).perform()
-
+            driver.execute_script("document.body.style.zoom = '" + RESIZE + "'");
             time.sleep(click_delay)
+            driver.execute_script("arguments[0].scrollIntoView(true);", element)
+            time.sleep(click_delay)
+            print("clicking")
+            #driver.execute_script("arguments[0].click();", element)
             webdriver.ActionChains(driver).move_to_element(element).click(element).perform()
+            #element.click()
             break
         except Exception as e:
             print(e)
@@ -173,7 +176,6 @@ def select_summon(driver, summons):
 
     # click default summon
     if not found:
-        print("couldn't find summon")
         click_retry(driver,
                 attributes[0].find_elements(By.CLASS_NAME,
                 "prt-button-cover")[0])
