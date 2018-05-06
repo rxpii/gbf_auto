@@ -24,7 +24,12 @@ time_start = time.time()
 time_current = time_start
 print("Starting sequence: 1hr cycle, 2hr break (randomized)")
 while True:
+    print("")
+    print("")
+    print("")
     print("Processing cycle #", num_cycles)
+    print("")
+    print("")
     print("")
     
     time_current = time.time()
@@ -43,8 +48,15 @@ while True:
     
     num_cycles += 1
 
-    random_sleeptime = random.uniform(1.5, 3)
+    #random_sleeptime = random.uniform(1.5, 3)
+    print("")
+    print("")
+    print("")
+    print("Processed cycle #", num_cycles)
+    print("")
+    print("")
+    print("")
 
-    print("Sleeping for", random_sleeptime, "hrs")
-    time.sleep(random_sleeptime * 60 * 60)
+    #print("Sleeping for", random_sleeptime, "hrs")
+    #time.sleep(random_sleeptime * 60 * 60)
 

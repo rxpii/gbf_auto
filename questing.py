@@ -1,4 +1,4 @@
-from gbfauto import *
+from gbfauto_js import *
 import time
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -22,7 +22,12 @@ time_start = time.time()
 time_current = time_start
 print("Starting sequence: 1hr cycle, 2hr break (non-randomized)")
 while True:
+    print("")
+    print("")
+    print("")
     print("Processing cycle #", num_cycles)
+    print("")
+    print("")
     print("")
 
     time_current = time.time()
@@ -35,8 +40,15 @@ while True:
     
     print("")
     
+    print("")
+    print("")
+    print("")
+    print("Finished cycle #", num_cycles)
+    print("")
+    print("")
+    print("")
     num_cycles += 1
 
-    print("Sleeping for 2hrs")
-    time.sleep(2 * 60 * 60)
+    #print("Sleeping for 2hrs")
+    #time.sleep(2 * 60 * 60)
 

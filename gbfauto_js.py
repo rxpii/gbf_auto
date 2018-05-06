@@ -14,7 +14,7 @@ from selenium.common.exceptions import WebDriverException
 
 RESIZE = "0.99"
  
-def click_by(driver, ref, by, name, locate_delay=3, click_delay=1,
+def click_by(driver, ref, by, name, locate_delay=1, click_delay=1,
         random_time=True):
     print("Attempting to retrive:", name)
     while True:
@@ -65,7 +65,7 @@ def get_element_by(driver, ref, by, name, locate_delay=3):
             continue
 
 
-def click_retry(driver, element, retry_delay=3, click_delay=1, force=False):
+def click_retry(driver, element, retry_delay=1, click_delay=0.5, force=False):
     while True:
         try:
             driver.execute_script("document.body.style.zoom = '" + RESIZE + "'");
@@ -375,12 +375,12 @@ def quest_sequence(driver, time_hrs=1.0, delay_sequence=5):
 
     while time.time() < time_start + time_s:
         enter_quest(driver,
-                'http://game.granbluefantasy.jp/#quest/supporter/728111/5', [2040003000])
+                'http://game.granbluefantasy.jp/#quest/supporter/728381/3', [2040056000, 2040195000])
 
         wait_for_displayed(driver, By.CSS_SELECTOR, 'div[class="btn-attack-start display-on"]')
-        
-        activate_skill(driver, 1, [4003])
-        activate_skill(driver, 2, [1021, 36])
+        activate_skill(driver, 0, [10])
+        activate_skill(driver, 1, [36])
+        activate_skill(driver, 3, [4003])
 
         attack(driver, auto=True)
 
@@ -498,7 +498,7 @@ def raid_sequence(driver, raid_options, summons, time_hrs=1.0, delay_sequence=5)
         wait_for_displayed(driver, By.CSS_SELECTOR,
                 'div[class="btn-attack-start display-on"]', delay=1)
 
-        activate_skill(driver, 1, [4003])
+        activate_skill(driver, 1, [646])
         time.sleep(delay_sequence)
         
 def ahalo_sequence(driver, summons, time_hrs=1.0, delay_sequence=5):
