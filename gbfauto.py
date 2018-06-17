@@ -14,7 +14,7 @@ from selenium.common.exceptions import WebDriverException
 
 RESIZE = "0.99"
  
-def click_by(driver, ref, by, name, locate_delay=3, click_delay=1,
+def click_by(driver, ref, by, name, locate_delay=1, click_delay=1,
         random_time=True):
     print("Attempting to retrive:", name)
     while True:
@@ -45,7 +45,7 @@ def click_by(driver, ref, by, name, locate_delay=3, click_delay=1,
     click_retry(driver, element)
  
 
-def get_element_by(driver, ref, by, name, locate_delay=3):
+def get_element_by(driver, ref, by, name, locate_delay=1):
     print("Attempting to retrive:", name)
  
     while True:
@@ -65,7 +65,7 @@ def get_element_by(driver, ref, by, name, locate_delay=3):
             continue
 
 
-def click_retry(driver, element, retry_delay=3, click_delay=1, force=False):
+def click_retry(driver, element, retry_delay=1, click_delay=0.5, force=False):
     while True:
         try:
             webdriver.ActionChains(driver).move_to_element(element).perform()
@@ -236,12 +236,11 @@ def enter_quest(driver, url, summons):
 
         popups_visible = checkfor_popups(driver)
 
-        if len(popups_visible) != 0:
-            return popups_visible
-
+        if (driver.current_url != url or len(popups_visible) != 0):
+            return False
         break
 
-    return []
+    return True
 
 def low_res(driver):
 
@@ -291,7 +290,7 @@ def click_char(driver, char_index):
     click_by(driver, party, By.CSS_SELECTOR, 'div[class="lis-character' +
             str(char_index) + ' btn-command-character"]')
     
-
+# char order: 0, 1, 2, 3
 def activate_skill(driver, char_index, skill_list):
     # retrieve party element
     party = driver.find_element(By.CLASS_NAME, "prt-member")
@@ -311,7 +310,7 @@ def activate_skill(driver, char_index, skill_list):
         '"]')
     
     # click back button
-    click_by(driver, driver, By.CLASS_NAME, "btn-command-back")
+    click_by(driver, driver, By.CLASS_NAME, "btn-command-back", random_time=False)
 
 def attack(driver, auto=False):
     # click attack button
@@ -391,7 +390,7 @@ def quest_sequence(driver, time_hrs=1.0, delay_sequence=5):
 
 def get_raid_id(driver, raid_options, refresh_delay=3):
     url_raid = "https://www.gbfraiders.com/?"
-    url_complete = url_raid
+    url_complete =Falseraid
     
     for i in range(len(raid_options)):
         url_complete += "raid=" + raid_options[i]
@@ -473,12 +472,9 @@ def join_raid(driver, raid_options, summons):
        return
 
     time.sleep(3)
-
-    popups_visible = enter_quest(driver, driver.current_url, summons)
-
-    time.sleep(5)
-
-    if len(popups_visible) != 0:
+    
+    # MAKE SURE THIS WORKS
+    if not enter_quest(driver, driver.current_url, summons):
         join_raid(driver, raid_options, summons)
         return
 

@@ -1,4 +1,5 @@
 from gbfauto_js import *
+from config import *
 import time
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -7,11 +8,8 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-EMAIL = "xianhaic+1@gmail.com"
-PASS = "153968Pa"
-
 options = webdriver.ChromeOptions();
-options.add_argument("user-data-dir=/home/xianhai/.config/google-chrome");
+options.add_argument("user-data-dir=" + PROFILE);
 
 driver = webdriver.Chrome(chrome_options=options)
 driver.get("http://game.granbluefantasy.jp/#mypage")
@@ -21,6 +19,8 @@ num_cycles = 0
 time_start = time.time()
 time_current = time_start
 print("Starting sequence: 1hr cycle, 2hr break (non-randomized)")
+click_by(driver, driver, By.CLASS_NAME, "prt-link-quest") 
+'''
 while True:
     print("")
     print("")
@@ -31,7 +31,6 @@ while True:
     print("")
 
     time_current = time.time()
-    
     quest_sequence(driver, time_hrs=1.0)
     
     print("Cycle duration:", time.time() - time_current)
@@ -51,4 +50,4 @@ while True:
 
     #print("Sleeping for 2hrs")
     #time.sleep(2 * 60 * 60)
-
+'''

@@ -40,8 +40,8 @@ def click_by(driver, ref, by, name, locate_delay=1, click_delay=1,
             print("Retrying:", name, "NoSuchWindowException")
  
     print(element.location)
-    if (random_time):
-        time.sleep(random.uniform(0.2, 2))
+    #if (random_time):
+    #    time.sleep(random.uniform(0.2, 2))
     click_retry(driver, element)
  
 
@@ -73,7 +73,7 @@ def click_retry(driver, element, retry_delay=1, click_delay=0.5, force=False):
             driver.execute_script("arguments[0].scrollIntoView(true);", element)
             time.sleep(click_delay)
             print("clicking")
-            #driver.execute_script("arguments[0].click();", element)
+            driver.execute_script("arguments[0].click();", element)
             webdriver.ActionChains(driver).move_to_element(element).click(element).perform()
             #element.click()
             break
@@ -293,7 +293,7 @@ def click_char(driver, char_index):
     click_by(driver, party, By.CSS_SELECTOR, 'div[class="lis-character' +
             str(char_index) + ' btn-command-character"]')
     
-
+# char order: 0, 1, 2, 3
 def activate_skill(driver, char_index, skill_list):
     # retrieve party element
     party = driver.find_element(By.CLASS_NAME, "prt-member")
@@ -310,10 +310,10 @@ def activate_skill(driver, char_index, skill_list):
     # click on char's skills
     for skill in skill_list:
         click_by(driver, char, By.CSS_SELECTOR, 'div[ability-id="' + str(skill) +
-        '"]')
+        '"]', random_time=False)
     
     # click back button
-    click_by(driver, driver, By.CLASS_NAME, "btn-command-back")
+    click_by(driver, driver, By.CLASS_NAME, "btn-command-back", random_time=False)
 
 def attack(driver, auto=False):
     # click attack button
@@ -375,13 +375,12 @@ def quest_sequence(driver, time_hrs=1.0, delay_sequence=5):
 
     while time.time() < time_start + time_s:
         enter_quest(driver,
-                'http://game.granbluefantasy.jp/#quest/supporter/728381/3', [2040056000, 2040195000])
+                'http://game.granbluefantasy.jp/#quest/supporter/728381/3', [2040056000, 2040047000])
 
         wait_for_displayed(driver, By.CSS_SELECTOR, 'div[class="btn-attack-start display-on"]')
-        activate_skill(driver, 0, [10])
-        activate_skill(driver, 1, [36])
-        activate_skill(driver, 3, [4003])
-
+        activate_skill(driver, 0, [2040])
+        activate_skill(driver, 1, [1614])
+        activate_skill(driver, 2, [4003])
         attack(driver, auto=True)
 
         while True:
@@ -496,9 +495,9 @@ def raid_sequence(driver, raid_options, summons, time_hrs=1.0, delay_sequence=5)
         join_raid(driver, raid_options, summons)
 
         wait_for_displayed(driver, By.CSS_SELECTOR,
-                'div[class="btn-attack-start display-on"]', delay=1)
+                'div[class="btn-attack-start display-on"]', delay=0.3)
 
-        activate_skill(driver, 1, [646])
+        activate_skill(driver, 1, [1960])
         time.sleep(delay_sequence)
         
 def ahalo_sequence(driver, summons, time_hrs=1.0, delay_sequence=5):

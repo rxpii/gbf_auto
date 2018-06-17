@@ -1,4 +1,5 @@
 from gbfauto_js import *
+from config import *
 import random
 import time
 from selenium import webdriver
@@ -9,11 +10,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 
-EMAIL = "xianhaic+1@gmail.com"
-PASS = "153968Pa"
-
 options = webdriver.ChromeOptions();
-options.add_argument("user-data-dir=/home/xianhai/.config/google-chrome");
+options.add_argument("user-data-dir=" + PROFILE);
 
 driver = webdriver.Chrome(chrome_options=options)
 driver.get("http://game.granbluefantasy.jp/#mypage")
