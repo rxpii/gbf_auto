@@ -9,8 +9,8 @@ from selenium.common.exceptions import TimeoutException
 from selenium.common.exceptions import NoSuchWindowException
 from selenium.common.exceptions import NoSuchElementException
  
-EMAIL = "xianhaic+420@gmail.com"
-PASS = "153968Pa"
+EMAIL = ""
+PASS = ""
  
  
 def click_by(by, name, locate_delay=3, click_delay=1):

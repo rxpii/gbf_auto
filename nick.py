@@ -6,8 +6,8 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-EMAIL = "xianhaic@gmail.com"
-PASS = "153968Pa"
+EMAIL = ""
+PASS = ""
 
 driver = webdriver.Chrome()
 login_seq(driver, EMAIL, PASS)
